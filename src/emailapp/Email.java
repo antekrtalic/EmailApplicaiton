@@ -1,5 +1,6 @@
 package emailapp;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Email {
@@ -7,14 +8,26 @@ public class Email {
     private String lastName;
     private String password;
     private String department;
+    private String email;
     private int mailboxCapacity;
-    String alternativeEmail;
+    private int defaultPasswordLength = 10;
+    private String companySuffix = "company.com";
+    private String alternativeEmail;
 
     // Constructor to receive the first and last name
     public Email(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        System.out.printf("EMAIL CREATED: " + this.firstName + " " + this.lastName);
+        System.out.println("EMAIL CREATED: " + this.firstName + " " + this.lastName);
+
+        this.department = getDepartment();
+        System.out.println("Department: " + this.department);
+
+        this.password = randomPassword(defaultPasswordLength);
+        System.out.println("Your password is: " + this.password);
+
+        this.email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + this.department + this.companySuffix;
+        System.out.println("Your email is: " + this.email);
     }
 
     // Ask for department
@@ -35,11 +48,11 @@ public class Email {
         String passwordSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!$%";
         char[] password = new char[length];
         for(int i = 0; i < length; i++) {
-            int rand = (int) Math.random() * passwordSet.length();
+            int rand = (int) (Math.random() * passwordSet.length());
             password[i] = passwordSet.charAt(rand);
         }
 
-        return password.toString();
+        return new String(password);
 
     }
 
